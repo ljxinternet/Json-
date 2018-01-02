@@ -24,9 +24,20 @@ namespace JsonToClass
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            string path = Application.StartupPath;
-            webBrowser_JsonToClass.IsWebBrowserContextMenuEnabled = false;
-            webBrowser_JsonToClass.Navigate(new Uri(path + "/JsonToClass.html"));
+            try
+            {
+                string path = Application.StartupPath;
+                webBrowser_JsonToClass.IsWebBrowserContextMenuEnabled = false;
+                webBrowser_JsonToClass.Navigate(new Uri(path + "/html/JsonToClass.html"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Source);
+                throw;
+            }
+
+            
 
             //this.BackColor = Color.White;
             //this.TransparencyKey = Color.White;

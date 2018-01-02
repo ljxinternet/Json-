@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title> Json转C# Class </title>
+  <meta charset="utf-8" />
+  <script src="jsontocsharp.js"></script>
+  <script src="jquery-1.9.1.min.js"></script>
+  <script>
+	function genJson(){
+		if($("#json").val().trim()==""){
+			$("#resData").text("请填写JSON");
+			return false;
+		}
+		var v = eval("(" + document.getElementById("json").value + ")");
+		var res = JSON2CSharp.convert(v);
+        $("#resData").html("<pre>"+res+"</pre>");
+	};
+  </script>
+
+     <script language="javascript">
+         function oCopy(){
+             var clipboard = new Clipboard('#resData');
+             clipboard.on('success', function(e) {
+                 //console.log(e);
+                 jAlert("复制成功！","恭喜");
+             });
+             clipboard.on('error', function(e) {
+                 //console.log(e);
+                 jAlert("复制失败！请手动复制","抱歉");
+             });
+
+
+         }
+     </script>
+     <script language="javascript">
+         function oSelect(obj){
+            if($("#resData").val()==""){
+                return;
+            }
+             obj.select();
+             window.clipboardData.setData("text", $("#resData").val());
+             //js=obj.createTextRange();
+             //js.execCommand("Copy")
+             alert("已复制到剪贴板!");
+         }
+     </script>
+
+     <style>
+         .body{text-align: center;}
+         .div_a{width: 100%;}
+         .div_b{width: 50%; float: left;border: 1px;text-align: center;}
+         .textarea{height: 400px;width: 95%;}
+         .txt{font-size: 14px;}
+     </style>
+
+
+ </head>
+
+ <body >
+    <div class="div_a">
+
+        <div class="div_b">
+            <p class="txt">需要解析的Json</p>
+            <p>
+                <textarea id="json"  class="textarea" ></textarea>
+            </p>
+            <p>
+                <button type="submit" onclick="genJson();">生成实体类</button>
+                &nbsp;
+                <button type="button" onclick="$('#json').val('')">清空</button>
+            </p>
+        </div>
+
+        <div class="div_b">
+            <p class="txt">解析后的类</p>
+            <p>
+            <textarea id="resData" class="textarea" onclick="oSelect(this)"></textarea>
+            </p>
+            <p>
+                <!--<button type="button" onclick="oCopy();">复制</button>-->
+                <button type="button" onclick="$('#resData').val('')">清空</button>
+            </p>
+        </div>
+    </div>
+ </body>
+</html>
